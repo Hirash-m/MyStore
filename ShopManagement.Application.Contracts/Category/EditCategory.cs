@@ -1,4 +1,4 @@
-﻿namespace ShopManagem.Application.Contracts.Category
+﻿namespace ShopManagement.Application.Contracts.Category
 {
     public class EditCategory : CreateCategory
     {

@@ -1,4 +1,4 @@
-﻿namespace ShopManagem.Application.Contracts.Category
+﻿namespace ShopManagement.Application.Contracts.Category
 {
     public class CategoryViewModel
     {
@@ -6,7 +6,7 @@
         public string Name { get; set; }
         public string Picture { get; set; }
         public DateTime CreationDate { get; set; }
-        public int ProductsCount{ get; set; }
+        public int ProductsCount { get; set; }
 
     }
 }
