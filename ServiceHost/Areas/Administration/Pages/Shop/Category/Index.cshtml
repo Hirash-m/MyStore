@@ -1,0 +1,114 @@
+﻿@page
+@model ServiceHost.Areas.Administration.Pages.Shop.Category.IndexModel
+
+@{
+}
+
+
+<div class="row">
+    <div class="col-sm-12">
+        <h4 class="page-title pull-right">@ViewData["title"]</h4>
+        <p class="pull-left">
+            <a class="btn btn-success btn-lg" href="#showmodal=@Url.Page("./Index", "Create")">Create Category</a>
+        </p>
+    </div>
+</div>
+
+<!-- Start content -->
+<div class="content">
+    <div class="container">
+
+        <!-- Page-Title -->
+        <div class="row">
+            <div class="col-sm-12">
+                <h4 class="pull-left page-title">Datatable</h4>
+                <ol class="breadcrumb pull-right">
+                    <li><a href="#">Moltran</a></li>
+                    <li><a href="#">Tables</a></li>
+                    <li class="active">Datatable</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Datatable</h3>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="panel panel-default">
+
+                                    <div class="panel-body">
+
+                                        <form class="form-inline" role="form" method="get">
+                                            <div class="form-group">
+                                                <label class="sr-only" asp-for="SearchModel.Name"></label>
+                                                <input asp-for="SearchModel.Name" placeholder="Search here">
+                                            </div>
+
+
+
+                                            <button type="submit" class="btn btn-success waves-effect waves-light m-l-10"> Search </button>
+                                        </form>
+                                    </div> <!-- panel-body -->
+                                </div> <!-- panel -->
+                            </div> <!-- col -->
+
+                        </div> <!-- End row -->
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <table id="datatable" class="table table-striped table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>نام</th>
+                                            <th>تعداد محصول</th>
+                                            <th>عکس</th>
+                                            <th>Age</th>
+                                            <th>Start date</th>
+                                            <th>Salary</th>
+                                        </tr>
+                                    </thead>
+
+
+                                    <tbody>
+                                        @foreach (var item in Model.CategoryView)
+                                        {
+                                            <tr>
+                                                <td>@item.Name</td>
+                                                <td>@item.ProductsCount</td>
+                                                <td>@item.Picture</td>
+                                                <td>61</td>
+                                                <td>@item.CreationDate</td>
+                                                <td>$320,800</td>
+                                                <td><a href="#showmodal=@Url.Page("./Index","Edit",new{id = item.Id})" >ویرایش </a></td>
+                                            </tr>
+                                        }
+
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div> <!-- End Row -->
+
+
+    </div> <!-- container -->
+
+</div>
+@section Scripts {
+    <script src="~/adminTheme/assets/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/adminTheme/assets/datatables/dataTables.bootstrap.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#datatable').dataTable();
+        });
+    </script>
+}

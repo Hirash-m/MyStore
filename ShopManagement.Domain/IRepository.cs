@@ -12,7 +12,7 @@ namespace ShopManagement.Domain
         T Get(TKey id);
         List<T> Get();
         void Create(T entity);
-        void Update(T entity);
+        
         void Delete(T entity);
       
         void DeleteAll(IEnumerable<T> entities);

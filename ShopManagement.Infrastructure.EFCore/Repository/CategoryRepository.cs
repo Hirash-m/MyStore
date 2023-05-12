@@ -1,4 +1,5 @@
-﻿using ShopManagement.Domain.CategoryAgg;
+﻿using ShopManagement.Application.Contracts.Category;
+using ShopManagement.Domain.CategoryAgg;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,41 +9,48 @@ using System.Threading.Tasks;
 
 namespace ShopManagement.Infrastructure.EFCore.Repository
 {
-    public class CategoryRepository : ICategoryRepository
+    public class CategoryRepository : BaseRepository<Category, int>, ICategoryRepository
     {
         private readonly ShopContext _ctx;
 
-        public CategoryRepository(ShopContext ctx)
+        public CategoryRepository(ShopContext ctx) : base(ctx)
         {
             _ctx = ctx;
         }
-        public void Create(Category entity)
+
+    
+        public EditCategory GetDetails(int id)
         {
-            _ctx.Categories.Add(entity);
+
+            return _ctx.Categories.Select(c => new EditCategory()
+            {
+                Id = c.Id,
+                Name = c.Name,
+                Description = c.Description,
+                KeyWords = c.KeyWords,
+                MetaDescription = c.MetaDescription,
+                Picture = c.Picture,
+                PictureAlt = c.PictureAlt,
+                PictureTitle = c.PictureTitle,
+                Slug = c.Slug
+
+            }).FirstOrDefault(c => c.Id == id);
 
         }
 
-        public bool Exist(Expression<Func<Category, bool>> expression)
+
+        public List<CategoryViewModel> Search(CategorySearchModel categorySearchModel)
         {
-            return _ctx.Categories.Any(expression);
+            var query = _ctx.Categories.Select(c => new CategoryViewModel
+            {
+                Id = c.Id,
+                Name = c.Name,
+                CreationDate = c.CreationDate
+            });
+            if (!string.IsNullOrWhiteSpace(categorySearchModel.Name))
+                query = query.Where(c => c.Name.Contains(categorySearchModel.Name));
+
+            return query.OrderBy(c => c.Id).ToList();
         }
-
-        public List<Category> GetCategories()
-        {
-            return _ctx.Categories.ToList();
-
-        }
-
-        public Category GetCategory(int id)
-        {
-            return _ctx.Categories.FirstOrDefault(c => c.Id == id);
-        }
-
-        public void SaveChanges()
-        {
-            _ctx.SaveChanges();
-        }
-
-        public E
     }
 }
