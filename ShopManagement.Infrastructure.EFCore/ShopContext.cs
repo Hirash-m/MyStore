@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ShopManagement.Domain.CategoryAgg;
+using ShopManagement.Domain.ProductAgg;
 using ShopManagement.Infrastructure.EFCore.Mapping;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,8 @@ namespace ShopManagement.Infrastructure.EFCore
     {
         #region  DbSet
         public DbSet<Category> Categories { get; set; }
-        public DbContextOptions<ShopContext> Options { get; }
+        public DbSet<Product> Products { get; set; }
+
 
         #endregion
 

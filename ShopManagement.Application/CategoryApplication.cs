@@ -18,11 +18,11 @@ namespace ShopManagement.Application
         {
             var oparation = new OperationResult();
             if (_categoryRepository.Exist(c => c.Name == command.Name))
-                return oparation.Failed("امکان ایجاد رکورد تکراری وجود ندارد");
+                return oparation.Failed(ApplicationMessages.DuplicatedRecord);
 
-
+            var slug = command.Slug.Slugify();
             var category = new Category(command.Name, command.Description, command.Picture, command.PictureAlt,
-                                        command.PictureTitle, command.KeyWords, command.MetaDescription, command.Slug);
+                                        command.PictureTitle, command.KeyWords, command.MetaDescription, slug);
             _categoryRepository.Create(category);
             _categoryRepository.SaveChanges();
             return oparation.Succeeded();
@@ -39,14 +39,14 @@ namespace ShopManagement.Application
             var oparation = new OperationResult();
             var category = _categoryRepository.Get(command.Id);
             if (category == null)
-                return oparation.Failed("دسته بندی مورد نظر وجود ندارد");
+                return oparation.Failed(ApplicationMessages.RecordNotFound);
             if (_categoryRepository.Exist(c => c.Name == command.Name && c.Id != command.Id))
-                return oparation.Failed("نام دسته بندی وارد شده وجود دارد . نام دیگری انتخاب نمایید.");
+                return oparation.Failed(ApplicationMessages.DuplicatedRecord);
 
 
-
+            var slug = command.Slug.Slugify();
             category.Edit(command.Name, command.Description, command.Picture, command.PictureAlt,
-                          command.PictureTitle, command.KeyWords, command.MetaDescription, command.Slug);
+                          command.PictureTitle, command.KeyWords, command.MetaDescription, slug);
             _categoryRepository.SaveChanges();
             return oparation.Succeeded();
 

@@ -1,9 +1,6 @@
 ﻿using _0_FrameWork.Domain;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ShopManagement.Domain.ProductAgg;
+
 
 namespace ShopManagement.Domain.CategoryAgg
 {
@@ -17,6 +14,7 @@ namespace ShopManagement.Domain.CategoryAgg
         public string KeyWords { get; private set; }
         public string MetaDescription { get; private set; }
         public string Slug { get; private set; }
+        public List<Product> Products{ get; set; }
 
 
         public Category(string name, string description, string picture,

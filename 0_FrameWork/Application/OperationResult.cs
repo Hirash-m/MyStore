@@ -10,7 +10,7 @@ namespace _0_FrameWork.Application
     {
         public bool IsSucceeded { get; set; }
         public string Message { get; set; }
-        public OperationResult()
+        public  OperationResult()
         {
             IsSucceeded = true;
         }
