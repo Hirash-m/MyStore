@@ -1,4 +1,5 @@
-﻿using _01_ShopQuery.Contracts.Slide;
+﻿using _01_ShopQuery.Contracts.Ctegory;
+using _01_ShopQuery.Contracts.Slide;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using ShopManagement.Application;
@@ -6,6 +7,7 @@ using ShopManagement.Application.Contracts.Category;
 using ShopManagement.Application.Contracts.Product;
 using ShopManagement.Application.Contracts.ProductPicture;
 using ShopManagement.Application.Contracts.Slide;
+using ShopManagement.Domain.CategoryAgg;
 using ShopManagement.Infrastructure.EFCore;
 using ShopManagement.Infrastructure.EFCore.Repository;
 
@@ -28,6 +30,7 @@ namespace ShopManagement.Configuration
             services.AddTransient<ISlideRepository, SlideRepository>();
 
             services.AddTransient<ISlideQuery, SlideQuery>();
+            services.AddTransient<ICategoryQuery, CategoryQuery>();
 
 
 
