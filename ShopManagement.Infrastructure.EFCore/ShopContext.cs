@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ShopManagement.Domain.CategoryAgg;
 using ShopManagement.Domain.ProductAgg;
+using ShopManagement.Domain.ProductPictureAgg;
+using ShopManagement.Domain.SlideAgg;
 using ShopManagement.Infrastructure.EFCore.Mapping;
 using System;
 using System.Collections.Generic;
@@ -15,6 +17,8 @@ namespace ShopManagement.Infrastructure.EFCore
         #region  DbSet
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<ProductPicture> ProductPictures { get; set; }
+        public DbSet<Slide> slides { get; set; }
 
 
         #endregion

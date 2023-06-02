@@ -6,6 +6,7 @@ namespace ShopManagement.Application.Contracts.Category
 {
     public interface ICategoryRepository : IRepository<ShopManagement.Domain.CategoryAgg.Category, int>
     {
+        List<CategoryViewModel> GetCategory();
 
         List<CategoryViewModel> Search(CategorySearchModel categorySearchModel);
 

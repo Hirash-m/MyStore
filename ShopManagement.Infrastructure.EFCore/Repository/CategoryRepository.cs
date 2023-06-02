@@ -18,7 +18,11 @@ namespace ShopManagement.Infrastructure.EFCore.Repository
             _ctx = ctx;
         }
 
-    
+        public List<CategoryViewModel> GetCategory()
+        {
+            return _ctx.Categories.Select(c => new CategoryViewModel { Id = c.Id, Name = c.Name }).ToList();
+        }
+
         public EditCategory GetDetails(int id)
         {
 

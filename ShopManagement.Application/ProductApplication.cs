@@ -51,7 +51,7 @@ namespace ShopManagement.Application
             return _productRepository.GetDetails(id);
         }
 
-        public OperationResult InNotStock(int id)
+        public OperationResult NotInStock(int id)
         {
             var operation = new OperationResult();
             var product = _productRepository.Get(id);
@@ -78,6 +78,11 @@ namespace ShopManagement.Application
         public List<ProductViewModel> Search(ProductSearchModel searchModel)
         {
             return _productRepository.Search(searchModel);
+        }
+
+        public List<ProductViewModel> GetProducts()
+        {
+           return _productRepository.GetProducts();
         }
     }
 }

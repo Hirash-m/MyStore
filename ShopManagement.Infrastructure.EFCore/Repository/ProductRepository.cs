@@ -3,7 +3,7 @@ using ShopManagement.Application.Contracts.Product;
 using ShopManagement.Domain.ProductAgg;
 
 using System.Linq.Expressions;
-
+using System.Reflection.Metadata.Ecma335;
 
 namespace ShopManagement.Infrastructure.EFCore.Repository
 {
@@ -43,28 +43,40 @@ namespace ShopManagement.Infrastructure.EFCore.Repository
 
         }
 
+        public List<ProductViewModel> GetProducts()
+        {
+            return _ctx.Products.Select(c => new ProductViewModel { Id=c.Id,Name=c.Name}).ToList();
+        }
+
         public List<ProductViewModel> Search(ProductSearchModel SearchModel)
         {
-           
-            var query = _ctx.Products.Include(c=>c.Category)
-                .Select( c=>new ProductViewModel
-                        {
-                            Id = c.Id,
-                            Name = c.Name,
-                            Picture = c.Picture,
-                            UnitPrice = c.UnitPrice,
-                            CategoryName = c.Category.Name
-                        }
-                        );
+
+            var query = _ctx.Products.Include(c => c.Category)
+                .Select(c => new ProductViewModel
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    Picture = c.Picture,
+                    UnitPrice = c.UnitPrice,
+                    CategoryId = c.CategoryId,
+                    Code = c.Code,
+                    CategoryName = c.Category.Name,
+                    CreationDate = c.CreationDate.ToString(),
+                    IsInStock=c.IsInStock
+                    
+                }) ;
 
             if (!string.IsNullOrWhiteSpace(SearchModel.name))
                 query = query.Where(c => c.Name.Contains(SearchModel.name));
 
-            //if (!string.IsNullOrWhiteSpace(SearchModel.Code))
-            //    query = query.Where(c => c..Contains(SearchModel.Code));
+            if (!string.IsNullOrWhiteSpace(SearchModel.Code))
+                query = query.Where(c => c.Code.Contains(SearchModel.Code));
 
-            //if (!string.IsNullOrWhiteSpace(SearchModel.CategoryId))
-            //    query = query.Where(c => c.c.Contains(SearchModel.name));
+            if (SearchModel.CategoryId != 0)
+                query = query.Where(c => c.CategoryId==SearchModel.CategoryId);
+
+            return query.ToList();
         }
+        
     }
 }

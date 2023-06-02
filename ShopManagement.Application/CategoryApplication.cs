@@ -52,7 +52,10 @@ namespace ShopManagement.Application
 
         }
 
-
+        public List<CategoryViewModel> GetCategories()
+        {
+            return _categoryRepository.GetCategory();
+        }
 
         public EditCategory GetCategory(int id)
         {
