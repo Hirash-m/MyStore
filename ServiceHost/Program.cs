@@ -1,3 +1,4 @@
+using DiscountManagement.Configuration;
 using ShopManagement.Configuration;
 
 namespace ServiceHost
@@ -12,6 +13,7 @@ namespace ServiceHost
             var connectionString = builder.Configuration.GetConnectionString("MyStore");
             //Add Models Services 
 
+            DiscountManagementBootstrapper.Configure(builder.Services, connectionString);
             ShopManagementBootstrapper.Configure(builder.Services, connectionString);
 
 
