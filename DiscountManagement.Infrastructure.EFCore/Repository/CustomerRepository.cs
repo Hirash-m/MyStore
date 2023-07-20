@@ -1,5 +1,6 @@
 ﻿using DiscountManagement.Application.Contract.CustomerDiscount;
 using DiscountManagement.Domain.CustomerDiscountAgg;
+using Microsoft.EntityFrameworkCore;
 using ShopManagement.Infrastructure.EFCore;
 using System;
 using System.Collections.Generic;
@@ -23,16 +24,29 @@ namespace DiscountManagement.Infrastructure.EFCore.Repository
         public List<CustomerDiscountViewModel> CustomerDiscounts(CustomerDiscountSearch command)
         {
             var products = _sctx.Products.Select(c => new { c.Id, c.Name }).ToList();
-            var query = _ctx.CustomerDiscounts.Select(c => new CustomerDiscountViewModel());
-            if(command.Id!= 0)
+            var query = _ctx.CustomerDiscounts.Select(c => new CustomerDiscountViewModel
             {
-                query = query.Where(c=>c.Id==command.Id);
+                Id=c.Id,
+                ProductId=c.ProductId,
+                StartDate=c.StartDate,
+                EndDate=c.EndDate,
+                DiscountRate=c.DiscountRate
+            });
+            if (command.Id > 0)
+            {
+                query = query.Where(c => c.Id == command.Id);
             }
             if (!string.IsNullOrWhiteSpace(command.PrudoctName))
             {
-                query = query.Where(c=>c.PrudoctName.Contains(command.PrudoctName));
+                query = query.Where(c => c.PrudoctName.Contains(command.PrudoctName));
             }
-            return query.ToList();
+            var discounts = query.ToList();
+
+
+            discounts.ForEach(z =>
+            z.PrudoctName = products.FirstOrDefault(c => c.Id == z.ProductId)?.Name);
+
+            return discounts;
 
         }
 
@@ -40,8 +54,14 @@ namespace DiscountManagement.Infrastructure.EFCore.Repository
         {
             return _ctx.CustomerDiscounts.Select(c => new CustomerDiscountEdit
             {
+                Id = c.Id,
+                ProductId=c.ProductId,
+                StartDate = c.StartDate,
+                EndDate = c.EndDate,
+                DiscountRate = c.DiscountRate,
+                Reason=c.Reason
 
-            }).FirstOrDefault(c=>c.Id==id);
+            }).FirstOrDefault(c => c.Id == id);
         }
     }
 }
